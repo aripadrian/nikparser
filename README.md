@@ -1,5 +1,5 @@
 # NIK Parser Versi Nuxt JS
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/522f83a9-39ed-4830-a95a-ec76f80b2127/deploy-status)](https://app.netlify.com/sites/nikparser/deploys)
 ## How to run
 
 ```bash

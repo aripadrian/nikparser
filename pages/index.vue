@@ -1,78 +1,58 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        nikparser
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+  <div>
+    <div class="px-4 text-center mx-auto">
+      <h1 class="font-bold text-lg mb-4">NIK Parser</h1>
+      <input placeholder="Masukkan NIK" type="number" class="px-4 h-10 block w-full border rounded-md" v-model="nik">
+    </div>
+    <div class="grid grid-cols-2 mt-8 gap-4 px-4">
+      <div>Tanggal Lahir</div>
+      <div>{{tl}}</div>
+    </div>
+    <div class="grid grid-cols-2 mt-4 gap-4 px-4">
+      <div>Provinsi</div>
+      <div>{{prov}}</div>
+    </div>
+    <div class="grid grid-cols-2 mt-4 gap-4 px-4">
+      <div>Kabupaten / Kota</div>
+      <div>{{kab}}</div>
+    </div>
+    <div class="grid grid-cols-2 mt-4 gap-4 px-4">
+      <div>Kecamatan</div>
+      <div>{{kec}}</div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      data: [],
+      nik: 'Masukkan NIK',
+      prov: '',
+      kab: '',
+      kec: '',
+      tl: ''
+    }
+  },
+  mounted() {
+    this.$axios.get('/wilayah.json').then(r=> {
+      this.data = r.data
+    })
+  },
+  watch: {
+    nik: {
+      handler(r) {
+        var prov = this.data.provinsi[r.slice(0,2)]
+        var kab = this.data.kabkot[r.slice(0,4)]
+        var kec = this.data.kecamatan[r.slice(0,6)]
+        var tl = r.slice(6,12)
+        this.prov = prov
+        this.kab = kab
+        this.kec = kec
+        this.tl = tl        
+      }
+    }
+  }
+}
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>
