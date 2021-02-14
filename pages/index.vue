@@ -36,7 +36,7 @@ export default {
     }
   },
   mounted() {
-    this.$axios.get('/wilayah.json').then(r=> {
+    this.$axios.get('https://gist.githubusercontent.com/aripadrian/a0eb7ec3980dd900c9d3f6f25a81ce4d/raw/5a02f069e03c2b05e79c0dae6061b2f6649fa8bd/data_nik.json').then(r=> {
       this.data = r.data
     })
   },
